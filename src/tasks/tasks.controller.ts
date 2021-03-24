@@ -22,14 +22,10 @@ import { TaskStatus } from "./task-status.enum";
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
-  // @Get()
-  // getTasks(@Query(ValidationPipe) filterDto: GetTasksFilterDto): Task[] {
-  //   if (Object.keys(filterDto).length) {
-  //     return this.tasksService.getTasksWithFilters(filterDto);
-  //   } else {
-  //     return this.tasksService.getAllTasks();
-  //   }
-  // }
+  @Get()
+  getTasks(@Query(ValidationPipe) filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksService.getTasks(filterDto);
+  }
 
   @Get('/:id')
   getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {
@@ -56,17 +52,4 @@ export class TasksController {
     return this.tasksService.updateTaskStatus(id, status);
   }
 
-  // @Post()                  second way
-  // createTask(
-  //   @Body('title') title: string,
-  //   @Body('description') description: string,
-  // ): Task {
-  //    return this.tasksService.createTask(title, description);
-    // console.log('title', title);
-    // console.log('description', description);}
-
-  // @Post()                   first way to create a task
-  // createTask(@Body() body) {
-  //   console.log('body', body);
-  // }
 }
